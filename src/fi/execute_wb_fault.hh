@@ -1,0 +1,78 @@
+#ifndef __EXECUTE_WB_FAULT_HH__
+#define __EXECUTE_WB_FAULT_HH__
+
+#include "config/the_isa.hh"
+#include "base/types.hh"
+#include "fi/issue_execute_fault.hh"
+#include "fi/faultq.hh"
+#include "cpu/op_class.hh"
+#include "arch/alpha/faults.hh"
+
+/*
+ * Inject a fault into the issue to execute stage pipeline register
+ */
+
+
+class Execute_WBFault : public Issue_ExecuteFault 
+{
+private:
+
+protected:
+ //Fields
+ short int branchTaken = 37;
+ short int exception = 38;
+ short int value = 39;
+
+public:
+  //field types
+  static const int branchTaken_type = 14;
+  static const int exception_type = 15;
+  static const int value_type = 16;
+ 
+  Execute_WBFault(std::ifstream &os, bool inherited);
+  ~Execute_WBFault();
+
+  virtual const char *description() const;
+  
+  virtual void dump() const;
+
+  virtual void set_field(std::string file_field);
+
+  //Process functions
+  bool process (bool value);
+  Fault process (Fault fault);
+  template <class VAL> inline VAL process(VAL value)
+  {
+     if(DTRACE(FaultInjection)){
+       if(field == value){
+         cout<<"===Value::process()==="<<endl;
+       }
+
+     value = manifest(value,getValue(),getValueType());
+     check4reschedule();
+
+     if(DTRACE(FaultInjection)){
+       if(field == value){
+         cout<<"===Value::process()==="<<endl;
+       }
+     }
+  }
+  return value;
+  }
+};
+
+/**Issue Execute Fault Queue
+ *Its purpouse is very straightforward
+ */
+
+class Execute_WBFaultQueue : public InjectedFaultQueue
+{
+  private:
+
+  protected:
+
+  public:
+    using InjectedFaultQueue::scan;
+    virtual Execute_WBFault *scan(std::string s, ThreadEnabledFault &thisThread, Addr vaddr, int curBundle, int fieldType);
+};
+#endif // __EXECUTE_WB_FAULT_HH__

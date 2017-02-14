@@ -1,0 +1,58 @@
+#ifndef __FETCH_DECODE_FAULT_HH__
+#define __FETCH_DECODE_FAULT_HH__
+
+#include "config/the_isa.hh"
+#include "base/types.hh"
+#include "fi/base_pipeline_fault.hh"
+#include "fi/faultq.hh"
+
+/*
+ * Inject a fault into the fetch-decode stage pipeline register
+ */
+
+
+class Fetch_DecodeFault : public Base_PipelineFault 
+{
+private:
+
+protected:
+ //Fields
+ short int machInst = 1;
+ short int pC = 2;
+ short int predPC = 3;
+ short int taken = 4;
+
+public:
+
+  Fetch_DecodeFault(std::ifstream &os, bool inherited);
+  ~Fetch_DecodeFault();
+
+  virtual const char *description() const;
+  
+  virtual void dump() const;
+
+  virtual void set_field(std::string file_field);
+
+  //Process functions
+  TheISA::MachInst process(TheISA::MachInst curInst);
+  Base_PipelineFault::dynInstPtr process(dynInstPtr curInst);
+  void pC_process(dynInstPtr &curInst);
+  void predPC_process(dynInstPtr &curInst);
+  void taken_process(dynInstPtr &curInst);
+};
+
+/**Fetch Decode Fault Queue
+ *Its purpouse is very straightforward
+ */
+
+class Fetch_DecodeFaultQueue : public InjectedFaultQueue
+{
+  private:
+
+  protected:
+
+  public:
+    using InjectedFaultQueue::scan;
+    virtual Fetch_DecodeFault *scan(std::string s, ThreadEnabledFault &thisThread, Addr vaddr, int curBundle, int fieldType);
+};
+#endif // __FETCH_DECODEFAULT_HH__
