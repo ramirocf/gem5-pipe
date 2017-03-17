@@ -1,0 +1,17 @@
+Decode_RenameFault Tick:10015 Flip:1 0 all 1 0 Taken 1
+Decode_RenameFault Tick:10014 Flip:1 0 all 1 0 MachInst 1
+Decode_RenameFault Tick:10013 Flip:1 0 all 1 0 PredPC 1
+Decode_RenameFault Tick:10012 Flip:1 0 all 1 0 PC 1 0
+Decode_RenameFault Tick:10011 Flip:1 0 all 1 0 SrcRegId1 1
+Decode_RenameFault Tick:10010 Flip:1 0 all 1 0 SrcRegId0 1
+Decode_RenameFault Tick:10009 Flip:1 0 all 1 0 IndirBranch 1
+Decode_RenameFault Tick:10008 Flip:1 0 all 1 0 CondBranch 1
+Decode_RenameFault Tick:10007 Flip:1 0 all 1 0 DestRegId 1
+Decode_RenameFault Tick:10006 Flip:1 0 all 1 0 NumSrcRegs 1
+Decode_RenameFault Tick:10005 Flip:1 0 all 1 0 Load 1
+Decode_RenameFault Tick:10004 Flip:1 0 all 1 0 MemRef 1
+Decode_RenameFault Tick:10003 Flip:1 0 all 1 0 ComplexALU 1
+Decode_RenameFault Tick:10002 Flip:1 0 all 1 0 SimpleALU 1
+Decode_RenameFault Tick:10001 Flip:1 0 all 1 0 Branch 1
+Decode_RenameFault Tick:10000 Flip:1 0 all 1 0 NumDestRegs 1 0
+
