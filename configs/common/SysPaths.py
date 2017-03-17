@@ -50,7 +50,7 @@ def system():
         try:
                 path = env['M5_PATH'].split(':')
         except KeyError:
-                path = [ '/dist/m5/system', './SPEC_FI/SPEC_IMAGE' ]
+                path = [ '/dist/m5/system', './benchmarks/m5_system' ]
 
         for system.dir in path:
             if os.path.isdir(system.dir):

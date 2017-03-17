@@ -52,7 +52,7 @@ class SysConfig:
         if self.diskname:
             return disk(self.diskname)
         elif buildEnv['TARGET_ISA'] == 'alpha':
-            return env.get('LINUX_IMAGE', disk('SPEC.img'))
+            return env.get('LINUX_IMAGE', disk('linux-latest.img'))
         elif buildEnv['TARGET_ISA'] == 'x86':
             return env.get('LINUX_IMAGE', disk('x86root.img'))
         elif buildEnv['TARGET_ISA'] == 'arm':

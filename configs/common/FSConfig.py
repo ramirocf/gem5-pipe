@@ -50,6 +50,12 @@ class CowIdeDisk(IdeDisk):
     def childImage(self, ci):
         self.image.child.image_file = ci
 
+class WriteIdeDisk(IdeDisk):
+    image = RawDiskImage(read_only=False)
+
+    def imageFile(self,ci):
+        self.image.image_file = ci
+
 class MemBus(CoherentBus):
     badaddr_responder = BadAddr()
     default = Self.badaddr_responder.pio
@@ -101,12 +107,14 @@ def makeLinuxAlphaSystem(mem_mode, mdesc = None, ruby = False):
         self.system_port = self.membus.slave
 
     self.mem_ranges = [AddrRange(mdesc.mem())]
-    self.disk0 = CowIdeDisk(driveID='master')
+    #self.disk0 = CowIdeDisk(driveID='master')
+    self.disk0 = WriteIdeDisk(driveID='master')
     self.disk2 = CowIdeDisk(driveID='master')
-    self.disk0.childImage(mdesc.disk())
+    #self.disk0.childImage(mdesc.disk())
+    self.disk0.imageFile(mdesc.disk())
     self.disk2.childImage(disk('linux-bigswap2.img'))
     self.simple_disk = SimpleDisk(disk=RawDiskImage(image_file = mdesc.disk(),
-                                               read_only = True))
+                                               read_only = False))
     self.intrctrl = IntrControl()
     self.mem_mode = mem_mode
     self.terminal = Terminal()
