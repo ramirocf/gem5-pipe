@@ -733,7 +733,7 @@ int
 Fi_System::increaseTicks(std :: string curCpu , ThreadEnabledFault *curThread , uint64_t ticks,ThreadContext *tc){
   curThread->increaseTicks(curCpu, ticks);
   allthreads->increaseTicks(curCpu, ticks);
-  SPECFI_timing(tc,curThread,curCpu);
+  //SPECFI_timing(tc,curThread,curCpu);
   return 1;
 }
 
