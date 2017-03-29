@@ -439,6 +439,7 @@ class Fi_System : public MemObject
       while ((fetch_DecodeFault = fetch_DecodeFaultQueue.scan(_name, *thread, pcAddr,curBundle,fieldType)) != NULL){
           curInst = fetch_DecodeFault->process(curInst);
           DPRINTF(FaultInjection,"PCAddr:%llx Fault Inserted \n",pcAddr);
+          scheduleswitch(tc);
         
       }
       return curInst;
@@ -455,6 +456,7 @@ class Fi_System : public MemObject
       while ((decode_RenameFault = decode_RenameFaultQueue.scan(_name, *thread, pcAddr,curBundle,fieldType)) != NULL){
           curInst = decode_RenameFault->process(curInst);
           DPRINTF(FaultInjection,"PCAddr:%llx Fault Inserted \n",pcAddr);
+          scheduleswitch(tc);
         
       }
       return curInst;
@@ -471,6 +473,7 @@ class Fi_System : public MemObject
       while ((rename_IssueFault = rename_IssueFaultQueue.scan(_name, *thread, pcAddr,curBundle,fieldType)) != NULL){
           curInst = rename_IssueFault->process(curInst);
           DPRINTF(FaultInjection,"PCAddr:%llx Fault Inserted \n",curInst->instAddr());
+          scheduleswitch(tc);
         
       }
       return curInst;
@@ -487,6 +490,7 @@ class Fi_System : public MemObject
       while ((issue_ExecuteFault = issue_ExecuteFaultQueue.scan(_name, *thread, pcAddr,curBundle,fieldType)) != NULL){
           curInst = issue_ExecuteFault->process(curInst);
           DPRINTF(FaultInjection,"PCAddr:%llx Fault Inserted \n",curInst->instAddr());
+          scheduleswitch(tc);
         
       }
       return curInst;
@@ -503,7 +507,7 @@ class Fi_System : public MemObject
       while ((wb_CommitFault = wb_CommitFaultQueue.scan(_name, *thread, pcAddr,curBundle,fieldType)) != NULL){
           curInst = wb_CommitFault->process(curInst);
           DPRINTF(FaultInjection,"PCAddr:%llx Fault Inserted \n",pcAddr);
-        
+        	scheduleswitch(tc);
       }
       return curInst;
     }
@@ -523,6 +527,7 @@ class Fi_System : public MemObject
           while ((execute_WBFault = reinterpret_cast<Execute_WBFault *>(execute_WBFaultQueue.scan(_name, *thread, pcAddr,curBundle,fieldType))) != NULL){
               value = execute_WBFault->process(value);
               DPRINTF(FaultInjection,"PCAddr:%llx Fault Inserted \n", pcAddr);
+              scheduleswitch(tc);
             }
         }
         return value;
