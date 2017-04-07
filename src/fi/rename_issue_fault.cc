@@ -72,6 +72,8 @@ void Rename_IssueFault::set_field(string file_field)
   else{
     //Look for fields in previous stages
     Decode_RenameFault::set_field(file_field);
+    Fetch_DecodeFault::set_field(file_field);
+    field_type = srcReg_type;
   }
 }
 
@@ -103,13 +105,16 @@ Base_PipelineFault::dynInstPtr Rename_IssueFault::process(dynInstPtr curInst)
     DPRINTF(FaultInjection,"===PrevDestReg::process()===");
   }
   else{
+		if(DTRACE(FaultInjection)){
+      cout<<"Inherited field looking in previous stages:"<<endl;
+    }
     //Look for the right process in previous faults
     //First check for static inst's fields
     StaticInstPtr staticInst = curInst->getcurInstr();
     staticInst = Decode_RenameFault::process(staticInst);
     curInst-> setCurInst(staticInst);
-    //Now for dyn inst' fields
-    Decode_RenameFault::process(curInst);
+    //Now for dyn instruction fields
+    Fetch_DecodeFault::process(curInst);
   }
   return curInst;
 }

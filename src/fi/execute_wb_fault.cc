@@ -67,6 +67,7 @@ void Execute_WBFault::set_field(string file_field)
   else{
     //Look for fields in previous stages
     Issue_ExecuteFault::set_field(file_field);
+    field_type = exception_type;
   }
 }
 

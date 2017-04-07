@@ -486,7 +486,6 @@ class Fi_System : public MemObject
       std::string _name = tc->getCpuPtr()->name();
       if(thread->getMode() != START || !FullSystem || !TheISA::inUserMode(tc))
         return curInst;
-
       while ((issue_ExecuteFault = issue_ExecuteFaultQueue.scan(_name, *thread, pcAddr,curBundle,fieldType)) != NULL){
           curInst = issue_ExecuteFault->process(curInst);
           DPRINTF(FaultInjection,"PCAddr:%llx Fault Inserted \n",curInst->instAddr());

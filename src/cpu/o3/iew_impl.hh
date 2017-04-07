@@ -1555,9 +1555,11 @@ DefaultIEW<Impl>::tick()
           bool enabled_fi = curr_tc->getEnabledFI();
           ThreadEnabledFault *curr_thread = curr_tc->getEnabledFIThread();
           if(enabled_fi && fi_system->fi_issue_execute){
-            for(int curBundle=0;curBundle<fromIssue->size;curBundle++){
-               Addr instPC = (fromIssue->insts[curBundle]->pcState()).instAddr();
-               fromIssue->insts[curBundle]= fi_system->issue_execute_fault(curr_tc, curr_thread, fromIssue->insts[curBundle], instPC, curBundle+1, Issue_ExecuteFault::opClass_type);
+          	int curBundle = 0;
+            while(fromIssue->insts[curBundle]) {
+              Addr instPC = (fromIssue->insts[curBundle]->pcState()).instAddr();
+              fromIssue->insts[curBundle]= fi_system->issue_execute_fault(curr_tc, curr_thread, fromIssue->insts[curBundle], instPC, curBundle+1, Issue_ExecuteFault::opClass_type);
+              curBundle++;
             }
           }
         }

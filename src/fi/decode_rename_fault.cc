@@ -88,10 +88,12 @@ void Decode_RenameFault::set_field(string file_field)
  else if(file_field.compare("IndirBranch")==0){
    field = indirBranch;
    field_type = staticInst;  
-}
- else
+  }
+ else{
    //Look for fields in previous faults
    Fetch_DecodeFault::set_field(file_field);
+ 	 field_type = staticInst;
+	}
 }
 const char *
 Decode_RenameFault::description() const
